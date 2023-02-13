@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Metroid</string>
+    <string name="title_home">Metroid</string>
+    <string name="home_navigation">Home</string>
+    <string name="title_meteo">Météo</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
