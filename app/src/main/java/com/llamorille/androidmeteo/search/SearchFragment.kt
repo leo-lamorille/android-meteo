@@ -1,8 +1,6 @@
 package com.llamorille.androidmeteo.search
 
 import android.os.Bundle
-import android.util.Log
-import android.view.InputDevice
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.llamorille.androidmeteo.R
-import com.llamorille.androidmeteo.databinding.FragmentSearchBinding
-
 class SearchFragment : Fragment() {
-
-    private lateinit var binding: FragmentSearchBinding;
 
     private lateinit var searchViewModel: SearchViewModel;
 
@@ -40,12 +33,15 @@ class SearchFragment : Fragment() {
 
         button.setOnClickListener{
             val city: String = view.findViewById<EditText>(R.id.searchAdress).text.toString();
+            val bundle = Bundle()
             searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
             searchViewModel.weather.observe(viewLifecycleOwner) {weather ->
-
+                bundle.putSerializable("MyData", weather)
+                val action = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(weather)
+                it.findNavController().navigate(action)
             }
             searchViewModel.fetchWeatherByCity(city)
-            it.findNavController().navigate(R.id.action_navigation_search_to_navigation_details)
+
         }
 
     }

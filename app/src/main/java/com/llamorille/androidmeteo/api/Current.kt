@@ -1,6 +1,8 @@
 package com.llamorille.androidmeteo.api
 
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
+
 
 @JsonClass(generateAdapter = true)
 data class Current (
@@ -9,4 +11,4 @@ data class Current (
   val wind_kph: Float?,
   val wind_dir: String?,
   val humidity: Float,
-)
+): Serializable
