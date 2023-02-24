@@ -7,8 +7,8 @@
         android:title="@string/home_navigation" />
 
     <item
-        android:id="@+id/navigation_meteo"
+        android:id="@+id/navigation_search"
         android:icon="@drawable/ic_sun_black_24dp"
-        android:title="@string/title_meteo" />
+        android:title="@string/title_search" />
 
 </menu>

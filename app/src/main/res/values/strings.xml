@@ -7,6 +7,7 @@
     <string name="title_home_sub4">id</string>
     <string name="home_navigation">Home</string>
     <string name="title_meteo">Météo</string>
+    <string name="title_search">Recherche de la Ville</string>
     <string name="home_description">Application de Mété</string>
     <string name="home_realize_by">réalisé par :</string>
     <string name="hugo_name">Hugo</string>

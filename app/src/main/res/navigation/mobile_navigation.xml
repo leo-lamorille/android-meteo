@@ -7,13 +7,23 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.llamorille.androidmeteo.HomeFragment"
+        android:name="com.llamorille.androidmeteo.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_meteo"
-        android:name="com.llamorille.androidmeteo.MeteoFragment"
-        android:label="@string/title_meteo"
-        tools:layout="@layout/fragment_meteo" />
+        android:id="@+id/navigation_search"
+        android:name="com.llamorille.androidmeteo.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_details"
+            app:destination="@id/navigation_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_details"
+        android:name="com.llamorille.androidmeteo.detail.Detail"
+        android:label=""
+        tools:layout="@layout/fragment_details" />
 </navigation>
