@@ -88,7 +88,7 @@
                 android:id="@+id/buttonSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rechercher" />
+                android:text="Search" />
         </LinearLayout>
 
         <LinearLayout

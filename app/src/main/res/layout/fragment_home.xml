@@ -69,16 +69,17 @@
 
         <TextView
             android:id="@+id/homeDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="147dp"
             android:layout_height="wrap_content"
             android:text="@string/home_description"
+            android:textAlignment="textEnd"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:constraint_referenced_tags="@string/home_description" />
 
         <TextView
             android:id="@+id/sunDescription"
-            android:layout_width="16dp"
+            android:layout_width="wrap_content"
             android:layout_height="19dp"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="5dp"
@@ -86,8 +87,18 @@
             android:textColor="@color/sunny_color" />
 
         <TextView
+            android:id="@+id/homeDescription2"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/home_description_2"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:constraint_referenced_tags="@string/home_description" />
+
+        <TextView
             android:id="@+id/homeRealized"
-            android:layout_width="wrap_content"
+            android:layout_width="157dp"
             android:layout_height="wrap_content"
             android:text="@string/home_realize_by"
             android:textColor="@color/black"
