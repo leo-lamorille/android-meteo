@@ -54,6 +54,10 @@ class DetailFragment: Fragment() {
         val temp = weather.current?.temp_c.toString() + " °C"
         view.findViewById<TextView>(R.id.temp).text = temp
 
+        // Local time
+        val localtime = weather.location?.localtime
+        view.findViewById<TextView>(R.id.localtime).text = localtime
+
         // Back Navigation
         view.findViewById<ImageButton>(R.id.back_button).setOnClickListener{
             it.findNavController().navigate(R.id.action_navigation_details_to_navigation_search)
