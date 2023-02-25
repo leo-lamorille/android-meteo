@@ -1,4 +1,4 @@
-package com.llamorille.androidmeteo.api
+package com.llamorille.androidmeteo.model
 
 import com.squareup.moshi.JsonClass
 import java.io.Serializable

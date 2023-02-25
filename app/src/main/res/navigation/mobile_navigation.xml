@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="weather"
-            app:argType="com.llamorille.androidmeteo.api.WeatherMain" />
+            app:argType="com.llamorille.androidmeteo.model.WeatherMain" />
         <action
             android:id="@+id/action_navigation_details_to_navigation_search"
             app:destination="@id/navigation_search" />
