@@ -7,5 +7,6 @@ import java.io.Serializable
 data class SearchResponse(
     val id: Int?,
     val name: String?,
-    val country: String?
+    val country: String?,
+    val region: String?
 ): Serializable

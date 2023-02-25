@@ -8,7 +8,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object ApiService {
     private val BASE_URL = "https://api.weatherapi.com/v1/"
-    private val API_KEY_WEATHER = "e4d402542cd14ddc83195806232402 "
+    private val API_KEY_WEATHER = "e4d402542cd14ddc83195806232402"
 
     //val BASE_IMAGE_URL = "https://openweathermap.org/img/wn/"
     private val retrofit = Retrofit.Builder()

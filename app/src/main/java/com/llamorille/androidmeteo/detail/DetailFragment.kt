@@ -39,6 +39,7 @@ class DetailFragment: Fragment() {
 
         // Localisation
         view.findViewById<TextView>(R.id.textCity).text = weather.location?.name
+        view.findViewById<TextView>(R.id.textRegion).text = " (" +  weather.location?.region + ")"
 
         // Humidité
         val humidity = weather.current?.humidity.toString() + '%'

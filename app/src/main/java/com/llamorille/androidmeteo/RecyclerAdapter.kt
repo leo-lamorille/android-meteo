@@ -15,11 +15,13 @@ class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var cityName: TextView
         var cityCountry: TextView
+        var cityRegion: TextView
         var card: CardView
 
         init {
             cityName = itemView.findViewById(R.id.city_name)
             cityCountry = itemView.findViewById(R.id.city_country)
+            cityRegion = itemView.findViewById(R.id.city_region)
             card = itemView.findViewById(R.id.card)
         }
 
@@ -39,6 +41,10 @@ class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         Log.d("POSITION", position.toString())
         viewHolder.cityName.text = searchList.elementAt(position).name
         viewHolder.cityCountry.text = searchList.elementAt(position).country
+        if (searchList.elementAt(position).region != "") {
+            viewHolder.cityRegion.text = " (" + searchList.elementAt(position).region + ")"
+        }
+
         viewHolder.card.setOnClickListener {
             val city = searchList.elementAt(position)
             Log.d("TEST", city.name.toString())
