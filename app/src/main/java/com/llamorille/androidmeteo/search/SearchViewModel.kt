@@ -17,7 +17,6 @@ class SearchViewModel(): ViewModel() {
     private val _search = MutableLiveData<List<SearchResponse>>()
     val search: LiveData<List<SearchResponse>> = _search
 
-
     fun fetchWeatherByCity(city: String) {
         viewModelScope.launch {
             val weather = service.findWeatherByCity(city)

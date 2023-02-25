@@ -7,10 +7,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import android.widget.AdapterView
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.EditText
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.llamorille.androidmeteo.R
 import com.llamorille.androidmeteo.RecyclerAdapter
-import com.llamorille.androidmeteo.model.SearchResponse
 
 class SearchFragment : Fragment() {
 
@@ -60,9 +59,10 @@ class SearchFragment : Fragment() {
 
         }
 
+        adapter.addInput(input)
+
         input.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Log.d("BEFORE", p0.toString())
                 searchViewModel.search.observe(viewLifecycleOwner) {
                         search -> adapter.addSearchList(search)
                 }
@@ -78,7 +78,6 @@ class SearchFragment : Fragment() {
                     searchViewModel.searchCity(p0.toString())
                 }
             }
-
         })
     }
 }
