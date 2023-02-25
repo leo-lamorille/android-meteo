@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_search_to_navigation_details"
             app:destination="@id/navigation_details" />
+        <action
+            android:id="@+id/action_navigation_search_self"
+            app:destination="@id/navigation_search" />
     </fragment>
 
     <fragment

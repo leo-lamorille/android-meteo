@@ -29,7 +29,6 @@ class DetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val weather = args.weather
-        Log.d("DETAIL", weather.toString())
 
         // Conditions
         val condition = weather.current?.condition?.text
