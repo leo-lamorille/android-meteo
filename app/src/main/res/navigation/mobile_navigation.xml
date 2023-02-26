@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_navigation_search_to_navigation_details"
             app:destination="@id/navigation_details" />
-        <action
-            android:id="@+id/action_navigation_search_self"
-            app:destination="@id/navigation_search" />
     </fragment>
 
     <fragment
@@ -29,5 +26,17 @@
         <action
             android:id="@+id/action_navigation_details_to_navigation_search"
             app:destination="@id/navigation_search" />
+        <action
+            android:id="@+id/action_navigation_details_to_navigation_future"
+            app:destination="@id/navigation_future" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_future"
+        android:name="com.llamorille.androidmeteo.future.FutureFragment"
+        android:label=""
+        tools:layout="@layout/fragment_future" >
+        <argument
+            android:name="location"
+            app:argType="com.llamorille.androidmeteo.model.Location" />
     </fragment>
 </navigation>

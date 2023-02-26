@@ -1,7 +1,6 @@
 package com.llamorille.androidmeteo.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,6 +60,17 @@ class DetailFragment: Fragment() {
         // Back Navigation
         view.findViewById<ImageButton>(R.id.back_button).setOnClickListener{
             it.findNavController().navigate(R.id.action_navigation_details_to_navigation_search)
+        }
+
+        val bundle = Bundle()
+        val futureButton = view.findViewById<Button>(R.id.buttonFuture)
+        futureButton.setOnClickListener{
+            val location = weather.location
+            bundle.putSerializable("MyData", location)
+            if (location != null) {
+                val action = DetailFragmentDirections.actionNavigationDetailsToNavigationFuture(location)
+                it.findNavController().navigate(action)
+            }
         }
     }
 }

@@ -38,14 +38,17 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager=layoutManager
         adapter = RecyclerAdapter()
         recyclerView.adapter = adapter
-        super.onViewCreated(view, savedInstanceState)
+
         val button = view.findViewById<Button>(R.id.buttonSearch)
         val input = view.findViewById<AutoCompleteTextView>(R.id.searchAdress)
+        adapter.addInput(input)
+
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         button.setOnClickListener{
             val city: String = input.text.toString();
@@ -59,7 +62,6 @@ class SearchFragment : Fragment() {
 
         }
 
-        adapter.addInput(input)
 
         input.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
