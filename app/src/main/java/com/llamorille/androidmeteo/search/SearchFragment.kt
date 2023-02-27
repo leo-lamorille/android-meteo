@@ -40,7 +40,6 @@ class SearchFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val layoutManager = LinearLayoutManager(context)
@@ -59,17 +58,19 @@ class SearchFragment : Fragment() {
                 errorMessage.text = resources.getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            val bundle = Bundle()
-            searchViewModel.weather.observe(viewLifecycleOwner) {weather ->
-                bundle.putSerializable("MyData", weather)
-                val action = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(weather)
-                it.findNavController().navigate(action)
-            }
             searchViewModel.fetchWeatherByCity(city) {
                 errorMessage.visibility = View.VISIBLE
                 errorMessage.text = resources.getString(R.string.error_city_unknown, city);
             }
 
+        }
+        searchViewModel.weather.observe(viewLifecycleOwner) {weather ->
+            val bundle = Bundle()
+            bundle.putSerializable("MyData", weather)
+            Log.d("WEATHER", weather.toString())
+            val action = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(weather)
+            Log.d("ACTION", action.toString())
+            view.findNavController().navigate(action)
         }
 
         adapter.addInput(input)
@@ -86,7 +87,6 @@ class SearchFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                Log.d("AFTER", p0.toString())
                 if(!p0.isNullOrEmpty()) {
                     errorMessage.visibility = View.INVISIBLE
                     searchViewModel.searchCity(p0.toString())
