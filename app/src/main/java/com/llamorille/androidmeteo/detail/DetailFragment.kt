@@ -12,10 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.llamorille.androidmeteo.R
+import com.llamorille.androidmeteo.model.ForecastDay
+import com.llamorille.androidmeteo.model.Location
 import com.squareup.picasso.Picasso
 
 class DetailFragment: Fragment() {
     val args: DetailFragmentArgs by navArgs()
+    var index: Int = 0;
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,50 +30,48 @@ class DetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val weather = args.weather
+        val loc: Location? = args.weather.location
+        val weather = args.weather.forecast?.forecastday
 
-        // Conditions
-        val condition = weather.current?.condition?.text
-        val image = view.findViewById<ImageView>(R.id.imageWeather)
-        Picasso.with(image.context).load("https:"+weather.current?.condition?.icon).into(image)
-        view.findViewById<TextView>(R.id.condition_title).text = condition
-
-        // Localisation
-        view.findViewById<TextView>(R.id.textCity).text = weather.location?.name
-        view.findViewById<TextView>(R.id.textRegion).text = " (" +  weather.location?.region + ")"
-
-        // Humidité
-        val humidity = weather.current?.humidity.toString() + '%'
-        view.findViewById<TextView>(R.id.humidity).text = humidity
-
-        // Vent
-        val wind = weather.current?.wind_kph.toString() + " km/h "
-        val windDirection =  weather.current?.wind_dir
-        view.findViewById<TextView>(R.id.wind).text = wind
-        view.findViewById<TextView>(R.id.wind_direction).text = windDirection
-
-        // Température
-        val temp = weather.current?.temp_c.toString() + " °C"
-        view.findViewById<TextView>(R.id.temp).text = temp
-
-        // Local time
-        val localtime = weather.location?.localtime
-        view.findViewById<TextView>(R.id.localtime).text = localtime
+        setData(view, loc, weather)
 
         // Back Navigation
-        view.findViewById<ImageButton>(R.id.back_button).setOnClickListener{
+        view.findViewById<ImageButton>(R.id.back_button).setOnClickListener {
             it.findNavController().navigate(R.id.action_navigation_details_to_navigation_search)
         }
 
-        val bundle = Bundle()
-        val futureButton = view.findViewById<Button>(R.id.buttonFuture)
-        futureButton.setOnClickListener{
-            val location = weather.location
-            bundle.putSerializable("MyData", location)
-            if (location != null) {
-                val action = DetailFragmentDirections.actionNavigationDetailsToNavigationFuture(location)
-                it.findNavController().navigate(action)
-            }
+        view.findViewById<Button>(R.id.nextDay).setOnClickListener {
+            index = (index+1) % 7
+            setData(view, loc, weather)
         }
+    }
+
+    fun setData(view: View, loc: Location?, weather: List<ForecastDay>?) {
+        // Conditions
+        val condition = weather?.elementAt(index)?.day?.condition?.text
+        val image = view.findViewById<ImageView>(R.id.imageWeather)
+        Picasso.with(image.context).load("https:" + weather?.elementAt(index)?.day?.condition?.icon)
+            .into(image)
+        view.findViewById<TextView>(R.id.condition_title).text = condition
+
+        // Localisation
+        view.findViewById<TextView>(R.id.textCity).text = loc?.name
+        view.findViewById<TextView>(R.id.textRegion).text = " (" + loc?.region + ")"
+
+        // Humidité
+        val humidity = weather?.elementAt(index)?.day?.avghumidity.toString() + '%'
+        view.findViewById<TextView>(R.id.humidity).text = humidity
+
+        // Vent
+        val wind = weather?.elementAt(index)?.day?.maxwind_kph.toString() + " km/h "
+        view.findViewById<TextView>(R.id.wind).text = wind
+
+        // Température
+        val temp = weather?.elementAt(index)?.day?.avgtemp_c.toString() + " °C"
+        view.findViewById<TextView>(R.id.temp).text = temp
+
+        // Local time
+        val localtime = weather?.elementAt(index)?.date
+        view.findViewById<TextView>(R.id.localtime).text = localtime
     }
 }

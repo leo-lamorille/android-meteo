@@ -22,21 +22,9 @@
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="weather"
-            app:argType="com.llamorille.androidmeteo.model.WeatherMain" />
+            app:argType="com.llamorille.androidmeteo.model.FutureWeather" />
         <action
             android:id="@+id/action_navigation_details_to_navigation_search"
             app:destination="@id/navigation_search" />
-        <action
-            android:id="@+id/action_navigation_details_to_navigation_future"
-            app:destination="@id/navigation_future" />
-    </fragment>
-    <fragment
-        android:id="@+id/navigation_future"
-        android:name="com.llamorille.androidmeteo.future.FutureFragment"
-        android:label=""
-        tools:layout="@layout/fragment_future" >
-        <argument
-            android:name="location"
-            app:argType="com.llamorille.androidmeteo.model.Location" />
     </fragment>
 </navigation>

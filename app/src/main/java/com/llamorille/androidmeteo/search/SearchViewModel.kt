@@ -9,10 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llamorille.androidmeteo.R
-import com.llamorille.androidmeteo.model.WeatherMain
 import com.llamorille.androidmeteo.api.ApiService
-import com.llamorille.androidmeteo.model.ForecastDay
-import com.llamorille.androidmeteo.model.SearchResponse
+import com.llamorille.androidmeteo.model.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -28,8 +26,8 @@ class SearchViewModel() : ViewModel() {
     private val _search = MutableLiveData<List<SearchResponse>>()
     val search: LiveData<List<SearchResponse>> = _search
 
-    private val _futureWeather = MutableLiveData<List<ForecastDay>?>()
-    val futureWeather: LiveData<List<ForecastDay>?> = _futureWeather
+    private val _futureWeather = MutableLiveData<FutureWeather?>()
+    val futureWeather: LiveData<FutureWeather?> = _futureWeather
 
 
     fun fetchWeatherByCity(city: String, onError: () -> Unit) {
@@ -56,15 +54,24 @@ class SearchViewModel() : ViewModel() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun fetchFutureWeather(city: String) {
+    fun fetchFutureWeather(city: String, onError: () -> Unit) {
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
         val current = LocalDateTime.now().toString()
         Log.d("DATE", current)
 
         viewModelScope.launch {
-            val future = service.searchFuture(city)
-            if (future.forecast != null) {
-                _futureWeather.postValue(future.forecast.forecastday)
+            try {
+                val future = service.searchFuture(city)
+                if (future.forecast != null) {
+                    _futureWeather.postValue(future)
+                }
+            } catch (httpException: HttpException) {
+                if (httpException.code() == 400) {
+                    onError()
+                } else {
+                    println("Unhandled Http Exception")
+                    httpException.printStackTrace();
+                }
             }
         }
     }

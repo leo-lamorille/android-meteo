@@ -1,6 +1,6 @@
 package com.llamorille.androidmeteo.search
 
-import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,11 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.llamorille.androidmeteo.R
 import com.llamorille.androidmeteo.RecyclerAdapter
-import retrofit2.HttpException
 
 class SearchFragment : Fragment() {
 
@@ -40,6 +38,7 @@ class SearchFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
@@ -62,19 +61,22 @@ class SearchFragment : Fragment() {
                 errorMessage.text = resources.getString(R.string.error_empty)
                 return@setOnClickListener
             }
-            searchViewModel.fetchWeatherByCity(city) {
+            searchViewModel.fetchFutureWeather(city) {
                 errorMessage.visibility = View.VISIBLE
                 errorMessage.text = resources.getString(R.string.error_city_unknown, city);
             }
 
         }
-        searchViewModel.weather.observe(viewLifecycleOwner) {weather ->
+        searchViewModel.futureWeather.observe(viewLifecycleOwner) {future ->
             val bundle = Bundle()
-            bundle.putSerializable("MyData", weather)
-            Log.d("WEATHER", weather.toString())
-            val action = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(weather)
-            Log.d("ACTION", action.toString())
-            view.findNavController().navigate(action)
+            bundle.putSerializable("MyData", future)
+            Log.d("WEATHER", future.toString())
+            if (future != null) {
+                val action = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(future)
+                Log.d("ACTION", action.toString())
+                view.findNavController().navigate(action)
+            }
+
         }
 
 
