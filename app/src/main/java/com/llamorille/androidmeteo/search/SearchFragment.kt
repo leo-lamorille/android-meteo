@@ -1,5 +1,6 @@
 package com.llamorille.androidmeteo.search
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.llamorille.androidmeteo.R
 import com.llamorille.androidmeteo.RecyclerAdapter
+import retrofit2.HttpException
 
 class SearchFragment : Fragment() {
 
@@ -46,17 +49,28 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val button = view.findViewById<Button>(R.id.buttonSearch)
         val input = view.findViewById<AutoCompleteTextView>(R.id.searchAdress)
+        val errorMessage = view.findViewById<TextView>(R.id.errorMessage)
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
-        button.setOnClickListener{
+        button.setOnClickListener {
             val city: String = input.text.toString();
-            val bundle = Bundle()
-            searchViewModel.weather.observe(viewLifecycleOwner) {weather ->
-                bundle.putSerializable("MyData", weather)
-                val action = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(weather)
-                it.findNavController().navigate(action)
+            if (city.isEmpty()) {
+                errorMessage.visibility = View.VISIBLE
+                errorMessage.text = resources.getString(R.string.error_empty)
+                return@setOnClickListener
             }
-            searchViewModel.fetchWeatherByCity(city)
+            searchViewModel.fetchWeatherByCity(city) {
+                errorMessage.visibility = View.VISIBLE
+                errorMessage.text = resources.getString(R.string.error_city_unknown, city);
+            }
 
+        }
+        searchViewModel.weather.observe(viewLifecycleOwner) {weather ->
+            val bundle = Bundle()
+            bundle.putSerializable("MyData", weather)
+            Log.d("WEATHER", weather.toString())
+            val action = SearchFragmentDirections.actionNavigationSearchToNavigationDetails(weather)
+            Log.d("ACTION", action.toString())
+            view.findNavController().navigate(action)
         }
 
         adapter.addInput(input)
@@ -73,8 +87,8 @@ class SearchFragment : Fragment() {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                Log.d("AFTER", p0.toString())
                 if(!p0.isNullOrEmpty()) {
+                    errorMessage.visibility = View.INVISIBLE
                     searchViewModel.searchCity(p0.toString())
                 }
             }
