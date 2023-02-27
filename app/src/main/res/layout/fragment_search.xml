@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:inputType="text"
+    android:orientation="vertical"
     app:constraint_referenced_tags="."
     tools:context=".search.SearchFragment">
 
@@ -96,6 +96,13 @@
             android:layout_height="match_parent"
             android:gravity="center|top"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/errorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#F44336"
+                tools:visibility="invisible" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
