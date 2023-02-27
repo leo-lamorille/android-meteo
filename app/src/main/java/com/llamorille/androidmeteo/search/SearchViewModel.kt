@@ -3,10 +3,12 @@ package com.llamorille.androidmeteo.search
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.llamorille.androidmeteo.R
 import com.llamorille.androidmeteo.model.WeatherMain
 import com.llamorille.androidmeteo.api.ApiService
 import com.llamorille.androidmeteo.model.ForecastDay
@@ -16,8 +18,9 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Date
+import retrofit2.HttpException
 
-class SearchViewModel(): ViewModel() {
+class SearchViewModel() : ViewModel() {
     private val service = ApiService;
     private val _weather = MutableLiveData<WeatherMain>()
     val weather: LiveData<WeatherMain> = _weather
@@ -28,10 +31,20 @@ class SearchViewModel(): ViewModel() {
     private val _futureWeather = MutableLiveData<List<ForecastDay>?>()
     val futureWeather: LiveData<List<ForecastDay>?> = _futureWeather
 
-    fun fetchWeatherByCity(city: String) {
+
+    fun fetchWeatherByCity(city: String, onError: () -> Unit) {
         viewModelScope.launch {
-            val weather = service.findWeatherByCity(city)
-            _weather.postValue(weather)
+            try {
+                val weather = service.findWeatherByCity(city)
+                _weather.postValue(weather)
+            } catch (httpException: HttpException) {
+                if (httpException.code() == 400) {
+                    onError()
+                } else {
+                    println("Unhandled Http Exception")
+                    httpException.printStackTrace();
+                }
+            }
         }
     }
 

@@ -5,18 +5,13 @@
     <string name="title_home_sub2">etr</string>
     <string name="title_home_sub3">☀</string>
     <string name="title_home_sub4">id</string>
-    <string name="home_navigation">Home</string>
-    <string name="title_meteo">Météo</string>
-    <string name="title_search">Recherche de la Ville</string>
-    <string name="home_description">Application de Mété</string>
-    <string name="home_realize_by">réalisé par :</string>
-    <string name="hugo_name">Hugo</string>
-    <string name="hugo_surname">WIEDER</string>
-    <string name="leo_name">Léo</string>
-    <string name="leo_surname">LAMORILLE</string>
-    <string name="armel_name">Armel</string>
-    <string name="armel_surname">RANALDI</string>
-    <string name="api_explain">Les données sont récupérées depuis l\'API Météo Concept</string>
-    <string name="api_logo">Météo Concept Logo</string>
-    <string name="home_description_content">Découvrez votre météo, en temps réel et gratuitement.</string>
+    <string name="title_search">City Search</string>
+    <string name="card_union">-</string>
+    <string name="detail_location_in">Weather in</string>
+    <string name="humidity_title">Humidity</string>
+    <string name="wind_title">Wind</string>
+    <string name="wind_direction">Wind direction</string>
+    <string name="button_search">Search</string>
+    <string name="error_empty">This field cannot be empty</string>
+    <string name="error_city_unknown">Unknown city %s</string>
 </resources>
