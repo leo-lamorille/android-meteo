@@ -74,6 +74,13 @@ class SearchFragment : Fragment() {
         }
 
         adapter.addInput(input)
+        adapter.addOnClick {
+            val city: String = input.text.toString();
+            searchViewModel.fetchWeatherByCity(city) {
+                errorMessage.visibility = View.VISIBLE
+                errorMessage.text = resources.getString(R.string.error_city_unknown, city);
+            }
+        }
 
         input.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
