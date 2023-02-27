@@ -17,10 +17,6 @@ object ApiService {
 
     private val service: WeatherApi = retrofit.create(WeatherApi::class.java)
 
-    suspend fun findWeatherByCity(city: String): WeatherMain {
-        return service.getWeatherData(city, API_KEY_WEATHER, "no")
-    }
-
     suspend fun searchCity(city: String): List<SearchResponse> {
         return service.searchCity(city, API_KEY_WEATHER)
     }

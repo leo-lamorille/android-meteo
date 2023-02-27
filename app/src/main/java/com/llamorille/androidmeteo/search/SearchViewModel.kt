@@ -29,23 +29,6 @@ class SearchViewModel() : ViewModel() {
     private val _futureWeather = MutableLiveData<FutureWeather?>()
     val futureWeather: LiveData<FutureWeather?> = _futureWeather
 
-
-    fun fetchWeatherByCity(city: String, onError: () -> Unit) {
-        viewModelScope.launch {
-            try {
-                val weather = service.findWeatherByCity(city)
-                _weather.postValue(weather)
-            } catch (httpException: HttpException) {
-                if (httpException.code() == 400) {
-                    onError()
-                } else {
-                    println("Unhandled Http Exception")
-                    httpException.printStackTrace();
-                }
-            }
-        }
-    }
-
     fun searchCity(city: String) {
         viewModelScope.launch {
             val search = service.searchCity(city)
