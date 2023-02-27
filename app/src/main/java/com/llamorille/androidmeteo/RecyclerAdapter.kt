@@ -10,7 +10,8 @@ import com.llamorille.androidmeteo.model.SearchResponse
 
 class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     private var searchList: List<SearchResponse> = ArrayList();
-    private lateinit var input: AutoCompleteTextView
+    private lateinit var input: AutoCompleteTextView;
+    private lateinit var onClick: () -> Unit;
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var cityName: TextView
         var cityCountry: TextView
@@ -45,6 +46,7 @@ class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
         viewHolder.card.setOnClickListener {
             input.setText(searchList.elementAt(position).name + " - " + searchList.elementAt(position).country)
+            this.onClick();
         }
     }
 
@@ -56,5 +58,9 @@ class RecyclerAdapter(): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
     fun addInput(inputAutoComplete: AutoCompleteTextView) {
         input = inputAutoComplete
+    }
+
+    fun addOnClick(executable: () -> Unit) {
+        this.onClick = executable;
     }
 }
