@@ -12,6 +12,7 @@
     <string name="wind_title">Wind</string>
     <string name="wind_direction">Wind direction</string>
     <string name="button_search">Search</string>
+    <string name="enter_city">Enter location:</string>
     <string name="error_empty">This field cannot be empty</string>
     <string name="error_city_unknown">Unknown city %s</string>
 </resources>
