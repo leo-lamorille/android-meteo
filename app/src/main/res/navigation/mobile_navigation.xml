@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_navigation_search_to_navigation_details"
             app:destination="@id/navigation_details" />
-        <action
-            android:id="@+id/action_navigation_search_self"
-            app:destination="@id/navigation_search" />
     </fragment>
 
     <fragment
@@ -25,7 +22,7 @@
         tools:layout="@layout/fragment_details" >
         <argument
             android:name="weather"
-            app:argType="com.llamorille.androidmeteo.model.WeatherMain" />
+            app:argType="com.llamorille.androidmeteo.model.FutureWeather" />
         <action
             android:id="@+id/action_navigation_details_to_navigation_search"
             app:destination="@id/navigation_search" />
